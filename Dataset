@@ -1,0 +1,136 @@
+======================== Linear Regression ========================
+import numpy as np
+from sklearn.linear_model import LinearRegression
+
+X = np.array([[1], [2], [3], [4], [5]])
+y = np.array([2, 4, 5, 4, 5])
+
+model = LinearRegression().fit(X, y)
+
+print(f"Coefficient: {model.coef_[0]}, Intercept: {model.intercept_}")
+print(f"Prediction for 6: {model.predict([[6]])[0]}")
+
+
+
+======================== Logistic Regression ========================
+import numpy as np
+from sklearn.linear_model import LogisticRegression
+
+X = np.array([[0.5], [1.0], [1.5], [3.0], [3.5], [4.0]])
+y = np.array([0, 0, 0, 1, 1, 1])
+
+model = LogisticRegression().fit(X, y)
+
+print(f"Classes: {model.classes_}")
+print(f"Probability for 2.0: {model.predict_proba([[2.0]])[0]}")
+
+
+
+======================== Cart Classification ========================
+import pandas as pd
+from sklearn.tree import DecisionTreeClassifier
+
+data = pd.DataFrame({'F1': [1, 2, 3, 4, 5], 'F2': [5, 4, 3, 2, 1], 'Target': [0, 0, 1, 1, 1]})
+X, y = data[['F1', 'F2']], data['Target']
+
+model = DecisionTreeClassifier(random_state=42).fit(X, y)
+
+preds = model.predict(pd.DataFrame([[4, 2]], columns=['F1', 'F2']))
+print(f"Class predicted for [4, 2]: {preds[0]}")
+
+
+
+======================== Cart regression ========================
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+
+data = pd.DataFrame({'F1': [1, 2, 3, 4, 5], 'F2': [5, 4, 3, 2, 1], 'Target': [10, 20, 30, 40, 50]})
+X, y = data[['F1', 'F2']], data['Target']
+
+model = DecisionTreeRegressor(random_state=42).fit(X, y)
+
+print(f"Prediction for [6, 0]: {model.predict([[6, 0]])[0]}")
+
+
+======================== Graph based Clustering ========================
+import numpy as np
+from sklearn.cluster import SpectralClustering
+
+X = np.array([[1, 1], [1.5, 1.5], [5, 5], [6, 6], [3, 3]])
+
+model = SpectralClustering(n_clusters=2, random_state=42, affinity='nearest_neighbors', n_neighbors=3).fit(X)
+print(f"Cluster Labels: {model.labels_}")
+
+
+
+======================== DBscan Clustering ========================
+import numpy as np
+from sklearn.cluster import DBSCAN
+
+X = np.array([[1, 2], [1.2, 2.1], [8, 7], [8.1, 7.2], [5, 5]])
+
+model = DBSCAN(eps=0.5, min_samples=2).fit(X)
+print(f"Cluster Labels: {model.labels_}")
+
+
+======================== Ensemble bagging ========================
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+
+X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12]])
+y = np.array([0, 0, 1, 1, 0, 1])
+
+model = RandomForestClassifier(n_estimators=10, random_state=42).fit(X, y)
+
+pred = model.predict([[10, 11]])
+print(f"Prediction for [10, 11]: {pred[0]}")
+
+
+
+======================== Ensemble Boosting ========================
+import numpy as np
+from sklearn.ensemble import GradientBoostingClassifier
+
+X = np.array([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12]])
+y = np.array([0, 0, 1, 1, 0, 1])
+
+model = GradientBoostingClassifier(n_estimators=10, random_state=42).fit(X, y)
+
+pred = model.predict([[10, 11]])
+print(f"Prediction for [10, 11]: {pred[0]}")
+
+
+
+======================== PCA ========================
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+
+X = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]])
+
+X_scaled = StandardScaler().fit_transform(X)
+
+pca = PCA(n_components=2)
+X_reduced = pca.fit_transform(X_scaled)
+
+print(f"Original Shape: {X.shape}")
+print(f"Reduced shape: {X_reduced.shape}")
+print(f"Reduced Data: {X_reduced}")
+
+
+
+
+======================== SVM ========================
+import numpy as np
+from sklearn.svm import SVC
+
+X = np.array([[1, 2], [3, 4], [5, 6], [7, 8]])
+y = np.array([0, 0, 1, 1])
+
+model = SVC(kernel='linear', random_state=42).fit(X, y)
+
+print(f"Support Vectors: {model.support_vectors_}")
+print(f"Prediction for [6, 7]: {model.predict([[6, 7]])[0]}")
+
+
+
