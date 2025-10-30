@@ -1,0 +1,82 @@
+======================== Word Count ======================
+
+from collections import Counter
+s = input("Enter text: ").split()
+for k, v in Counter(s).items():
+    print(f"{k} - {v}")
+
+
+======================= FM ==============================
+
+import hashlib
+
+def linear_hash(x, a, b, p):
+    return (a * x + b) % p
+
+def trailing_zeros(x):
+    return (x & -x).bit_length() - 1 if x else 0
+
+def flajolet_martin(stream, a=6, b=1, p=5):
+    m = 0
+    for e in stream:
+        x = int(e) if e.isdigit() else int(hashlib.md5(e.encode()).hexdigest(), 16) % p
+        r = trailing_zeros(linear_hash(x, a, b, p))
+        m = max(m, r)
+    return 2 ** m
+
+# Input
+elems = [e.strip() for e in input("Enter comma-separated elements: ").split(",") if e.strip()]
+
+# Estimate
+print("Estimated number of distinct elements:", flajolet_martin(elems))
+
+
+===================== Blooms Filter ========================
+
+m = int(input("Enter size m: "))
+bits = [0] * m
+
+f1 = lambda x: x % m
+f2 = lambda x: (2*x + 6) % m
+
+# Insert elements
+for x in map(int, input("Insert ints: ").split()):
+    bits[f1(x)] = bits[f2(x)] = 1
+
+# Check elements
+for x in map(int, input("Check ints: ").split()):
+    print(x, "->", "probably present" if bits[f1(x)] and bits[f2(x)] else "not present")
+
+print("Bit array:", bits)
+
+
+==================== Matrix Multipliccation ========================
+
+import numpy as np
+
+r1, c1 = map(int, input("Enter rows,cols of A: ").split())
+r2, c2 = map(int, input("Enter rows,cols of B: ").split())
+
+if c1 != r2:
+    print("Matrix multiplication not possible")
+else:
+    A = np.array([list(map(int, input(f"A row {i+1}: ").split())) for i in range(r1)])
+    B = np.array([list(map(int, input(f"B row {i+1}: ").split())) for i in range(r2)])
+    print("Result:\n", A @ B)
+
+
+====================== DV Using R ======================
+
+# Install and load ggplot2 if not already
+if(!require(ggplot2)) install.packages("ggplot2"); library(ggplot2)
+
+data(mtcars)  # Example dataset
+
+# Scatter plot
+ggplot(mtcars, aes(x=wt, y=mpg)) + geom_point(color="red") + ggtitle("Weight vs MPG")
+
+# Histogram
+ggplot(mtcars, aes(x=mpg)) + geom_histogram(binwidth=2, fill="skyblue", color="black") + ggtitle("MPG Distribution")
+
+# Boxplot
+ggplot(mtcars, aes(x=factor(cyl), y=mpg)) + geom_boxplot(fill="pink") + ggtitle("MPG by Cylinders")
